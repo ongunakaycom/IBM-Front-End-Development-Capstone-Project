@@ -1,3 +1,7 @@
+.popup-overlay {
+  z-index: 9999999999999999999999999999999 !important; /* Set a higher z-index value */
+}
+
 .doctor-card-container {
     width: 300px;
     height: 100%;
