@@ -6,8 +6,9 @@ const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
   const [appointmentDate, setAppointmentDate] = useState('');
   const [timeSlot, setTimeSlot] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     // Validate that all fields are filled
@@ -25,12 +26,47 @@ const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
       return;
     }
 
+    // Check if the user is logged in
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('You must be logged in to book an appointment.');
+      return;
+    }
+
     setError('');
-    onSubmit({ name, phoneNumber, appointmentDate, timeSlot });
-    setName('');
-    setPhoneNumber('');
-    setAppointmentDate('');
-    setTimeSlot('');
+
+    // Send data to the server
+    try {
+      const response = await fetch('http://localhost:5000/api/appointments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token, // Send the token in the Authorization header
+        },
+        body: JSON.stringify({
+          name,
+          phoneNumber,
+          appointmentDate,
+          timeSlot,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSuccessMessage(data.message);
+        setName('');
+        setPhoneNumber('');
+        setAppointmentDate('');
+        setTimeSlot('');
+        onSubmit(data); // Pass the response data to the parent component if needed
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || 'Failed to create appointment.');
+      }
+    } catch (err) {
+      setError('An error occurred while creating the appointment.');
+      console.error(err);
+    }
   };
 
   return (
@@ -88,6 +124,7 @@ const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
         </select>
       </div>
       {error && <div style={{ color: 'red' }}>{error}</div>}
+      {successMessage && <div style={{ color: 'green' }}>{successMessage}</div>}
       <button type="submit">Book Now</button>
     </form>
   );

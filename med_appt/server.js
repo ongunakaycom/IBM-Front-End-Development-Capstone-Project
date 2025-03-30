@@ -69,6 +69,41 @@ app.post("/api/login", (req, res) => {
   });
 });
 
+// API endpoint for creating an appointment
+app.post("/api/appointments", (req, res) => {
+  const { name, phoneNumber, appointmentDate, timeSlot } = req.body;
+  const sql = `
+    INSERT INTO appointments (name, phone, appointment_date, time_slot)
+    VALUES (?, ?, ?, ?)
+  `;
+  const params = [name, phoneNumber, appointmentDate, timeSlot];
+
+  db.run(sql, params, function (err) {
+    if (err) {
+      console.error(err.message);
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(200).json({ message: "Appointment created successfully!", id: this.lastID });
+    }
+  });
+});
+
+// Create the appointments table if it doesn't exist
+db.run(
+  `CREATE TABLE IF NOT EXISTS appointments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    phone TEXT,
+    appointment_date TEXT,
+    time_slot TEXT
+  )`,
+  (err) => {
+    if (err) {
+      console.error("Table creation error:", err.message);
+    }
+  }
+);
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
