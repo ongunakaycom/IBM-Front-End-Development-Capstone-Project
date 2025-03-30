@@ -5,6 +5,7 @@ import Landing_Page from "./Components/Landing_Page/Landing_Page.jsx";
 import SignUp from "./Components/Sign_Up/SignUp.jsx";
 import Login from "./Components/Login/Login.jsx";
 import InstantConsultation from "./Components/Instant_Consultation/InstantConsultation.jsx";
+import Notification from "./Components/Notification/Notification.jsx"; // Import Notification component
 
 // Placeholder for FindDoctors component
 const FindDoctors = () => {
@@ -20,14 +21,15 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Landing_Page />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/instant-consultation" element={<InstantConsultation />} />
-          <Route path="/search/doctors" element={<FindDoctors />} />
-        </Routes>
+        <Notification> {/* Include Notification component */}
+          <Routes>
+            <Route path="/" element={<Landing_Page />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/instant-consultation" element={<InstantConsultation />} />
+            <Route path="/search/doctors" element={<FindDoctors />} />
+          </Routes>
+        </Notification>
       </BrowserRouter>
     </div>
   );

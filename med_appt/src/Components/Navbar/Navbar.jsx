@@ -16,10 +16,12 @@ const Navbar = () => {
     sessionStorage.removeItem("phone");
     localStorage.removeItem("doctorData");
     setIsLoggedIn(false);
+    setUsername("");
     window.location.reload();
   };
 
   useEffect(() => {
+    // Check sessionStorage for login details
     const storedEmail = sessionStorage.getItem("email");
     if (storedEmail) {
       setIsLoggedIn(true);
@@ -46,7 +48,6 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </li>
         <li className="link">
-          {/* Instant Consultation link */}
           <Link to="/instant-consultation">Instant Consultation</Link>
         </li>
         <li className="link">

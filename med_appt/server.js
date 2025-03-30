@@ -37,15 +37,28 @@ const db = new sqlite3.Database("./database.db", (err) => {
 // API endpoint for signup
 app.post("/api/signup", (req, res) => {
   const { name, phone, email, password } = req.body;
-  const sql = "INSERT INTO users (name, phone, email, password) VALUES (?, ?, ?, ?)";
-  const params = [name, phone, email, password];
 
-  db.run(sql, params, function (err) {
+  // Check if the email already exists
+  const checkEmailSql = "SELECT * FROM users WHERE email = ?";
+  db.get(checkEmailSql, [email], (err, row) => {
     if (err) {
       console.error(err.message);
-      res.status(500).json({ error: err.message });
+      res.status(500).json({ error: "Database error occurred." });
+    } else if (row) {
+      res.status(400).json({ error: "Email already exists. Please use a different email." });
     } else {
-      res.status(200).json({ message: "User registered successfully!", id: this.lastID });
+      // Insert the new user if email does not exist
+      const sql = "INSERT INTO users (name, phone, email, password) VALUES (?, ?, ?, ?)";
+      const params = [name, phone, email, password];
+
+      db.run(sql, params, function (err) {
+        if (err) {
+          console.error(err.message);
+          res.status(500).json({ error: err.message });
+        } else {
+          res.status(200).json({ message: "User registered successfully!", id: this.lastID });
+        }
+      });
     }
   });
 });
