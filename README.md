@@ -33,13 +33,6 @@ The website will offer a user-friendly platform that allows patients to book med
 - **Health Tips**: Daily health tips and preventive measures.
 - **Educational Videos**: Various health topics and resources available for patients to access.
 
-## Technologies Used
-
-- **Frontend**: HTML, CSS, ReactJS, VITE
-- **UI/UX**: Figma (for designing the user interface)
-- **Backend**: Express
-- **Database**: MongoDB
-
 ## License
 
 This project is licensed under the License - see the [LICENSE](LICENSE) file for details.
