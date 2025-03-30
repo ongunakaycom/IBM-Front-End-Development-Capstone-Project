@@ -2,7 +2,8 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar.jsx";
 import Landing_Page from "./Components/Landing_Page/Landing_Page.jsx";
-import SignUp from "./Components/Sign_Up/SignUp.jsx"; // Import your SignUp component
+import SignUp from "./Components/Sign_Up/SignUp.jsx";
+import Login from "./Components/Login/Login.jsx";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing_Page />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} /> 
         </Routes>
       </BrowserRouter>
     </div>
