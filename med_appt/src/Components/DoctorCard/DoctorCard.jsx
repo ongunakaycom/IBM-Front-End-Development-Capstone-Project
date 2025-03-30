@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import './DoctorCard.css';
@@ -15,6 +15,15 @@ const DoctorCard = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [appointments, setAppointments] = useState([]);
+  const [userData, setUserData] = useState({ name: '', phone: '' });
+
+  useEffect(() => {
+    // Fetch logged-in user data from localStorage or API
+    const loggedUser = JSON.parse(localStorage.getItem('user')); // Assuming user data is stored in localStorage
+    if (loggedUser) {
+      setUserData({ name: loggedUser.name, phone: loggedUser.phone });
+    }
+  }, []);
 
   const handleBooking = () => {
     setShowModal(true);
@@ -28,13 +37,14 @@ const DoctorCard = ({
   };
 
   const handleFormSubmit = (appointmentData) => {
-    const newAppointment = { id: uuidv4(), ...appointmentData };
+    const newAppointment = { id: uuidv4(), ...appointmentData, ...userData };
     setAppointments([...appointments, newAppointment]);
     setShowModal(false);
   };
 
   return (
     <div className="doctor-card-container">
+      {/* Doctor Details Section */}
       <div className="doctor-card-details-container">
         <div className="doctor-card-profile-image-container">
           {profilePic ? (
@@ -63,27 +73,30 @@ const DoctorCard = ({
             <div className="doctor-card-career-profile">{careerProfile}</div>
           )}
         </div>
-        {/* Step 6: Book Appointment Button */}
       </div>
 
+      {/* Booking Button */}
+      <div>
+        <button className="book-appointment-btn" onClick={handleBooking}>
+          <div>Book Appointment</div>
+          <div>No Booking Fee</div>
+        </button>
+      </div>
+
+      {/* Popup with Appointment Form */}
       <div className="doctor-card-options-container">
         <Popup
-          trigger={
-            <button className="book-appointment-btn" onClick={handleBooking}>
-              <div>Book Appointment</div>
-              <div>Book Time Slot</div>
-              <div>Book For Specified Date</div>
-            </button>
-          }
           modal
           open={showModal}
           onClose={() => setShowModal(false)}
+          contentStyle={{ padding: '20px' }}
         >
           {(close) => (
-            <div className="appointment-form-wrapper" style={{ padding: '20px' }}>
+            <div className="appointment-form-wrapper">
               <AppointmentForm
                 doctorName={name}
                 doctorSpeciality={speciality}
+                userData={userData} // Pass user data to the form
                 onSubmit={handleFormSubmit}
               />
               <button onClick={close}>Close</button>
@@ -91,6 +104,27 @@ const DoctorCard = ({
           )}
         </Popup>
       </div>
+
+      {/* Appointments List */}
+      {appointments.length > 0 && (
+        <div className="appointments-list">
+          <h3>Booked Appointments:</h3>
+          {appointments.map((appointment) => (
+            <div className="bookedInfo" key={appointment.id}>
+              <p>Name: {appointment.name}</p>
+              <p>Phone: {appointment.phone}</p>
+              <p>Date: {appointment.appointmentDate}</p>
+              <p>Time: {appointment.timeSlot}</p>
+              <button
+                className="cancel-appointment-btn"
+                onClick={() => handleCancel(appointment.id)}
+              >
+                Cancel Appointment
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

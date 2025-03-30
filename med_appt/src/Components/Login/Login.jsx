@@ -16,17 +16,28 @@ const Login = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+
+
     const validate = () => {
         const newErrors = {};
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
         if (!formData.email) {
             newErrors.email = "Email is required.";
+        } else if (!emailRegex.test(formData.email)) {
+            newErrors.email = "Invalid email format.";
         }
+    
         if (!formData.password) {
             newErrors.password = "Password is required.";
+        } else if (formData.password.length < 6) {
+            newErrors.password = "Password must be at least 6 characters.";
         }
+    
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    };
+    };    
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -43,9 +54,9 @@ const Login = () => {
                     if (data.error) {
                         setServerMessage(data.error);
                     } else {
-                        // Assuming the server returns an auth token
-                        sessionStorage.setItem('email', formData.email);
-                        sessionStorage.setItem('auth-token', data.token);
+                        // Store token and user data in localStorage
+                        localStorage.setItem('token', data.token); // Save the token
+                        localStorage.setItem('user', JSON.stringify(data.user)); // Save user data
                         // Redirect to Home page after successful login
                         navigate('/');
                     }
@@ -56,6 +67,8 @@ const Login = () => {
                 });
         }
     };
+
+
 
     const handleReset = () => {
         setFormData({ email: '', password: '' });

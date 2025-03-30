@@ -8,15 +8,16 @@ const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Validate that all fields are filled
     if (!name || !phoneNumber || !appointmentDate || !timeSlot) {
       setError('Please fill out all fields.');
       return;
     }
-
+  
     // Validate that the appointment date is not in the past
     const selectedDate = new Date(appointmentDate);
     const today = new Date();
@@ -25,23 +26,15 @@ const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
       setError('Please choose a future date.');
       return;
     }
-
-    // Check if the user is logged in
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setError('You must be logged in to book an appointment.');
-      return;
-    }
-
+  
     setError('');
-
+  
     // Send data to the server
     try {
       const response = await fetch('http://localhost:5000/api/appointments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token, // Send the token in the Authorization header
         },
         body: JSON.stringify({
           name,
@@ -50,7 +43,7 @@ const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
           timeSlot,
         }),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         setSuccessMessage(data.message);
@@ -68,6 +61,7 @@ const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
       console.error(err);
     }
   };
+
 
   return (
     <form onSubmit={handleFormSubmit} className="appointment-form">
