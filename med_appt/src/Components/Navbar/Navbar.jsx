@@ -33,12 +33,12 @@ const Navbar = () => {
   return (
     <nav>
       <div className="nav__logo">
-        <Link to="/">
+        <Link to="/" className="logo-link">
           StayHealthy <i style={{ color: "#2190FF" }} className="fa fa-user-md"></i>
         </Link>
         <span>.</span>
       </div>
-      <div className="nav__icon" onClick={handleClick}>
+      <div className="nav__icon" onClick={handleClick} role="button" tabIndex={0}>
         <i className={click ? "fa fa-times" : "fa fa-bars"}></i>
       </div>
       <ul className={click ? "nav__links active" : "nav__links"}>
@@ -46,6 +46,7 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </li>
         <li className="link">
+          {/* Instant Consultation link */}
           <Link to="/instant-consultation">Instant Consultation</Link>
         </li>
         <li className="link">

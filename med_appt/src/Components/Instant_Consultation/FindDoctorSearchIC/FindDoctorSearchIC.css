@@ -1,3 +1,45 @@
+/* Add top padding to main container so content isn’t hidden by the fixed navbar */
+.finddoctor {
+    padding-top: 80px; /* Adjust this value based on your navbar height */
+    overflow: hidden;
+}
+
+/* Update doctor search box: remove full viewport height and adjust z-index */
+.doctor-search-box {
+    display: flex;
+    align-items: center;
+    width: 430px;
+    position: absolute;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 -1px 0 0 inset;
+    border-radius: 5px;
+    /* Remove height: 100vh; to avoid full screen height */
+    z-index: 1100; /* Ensure this layer appears above elements if needed */
+}
+
+/* Retain your other CSS rules below as before */
+.search-doctor-input-box {
+    height: 40px;
+    width: 100%;
+    padding: 6px 20px 5px 10px;
+    outline: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 1px solid rgb(59, 58, 58);
+}
+
+.findIcon {
+    display: block;
+    width: 24px; /* adjust as needed */
+    height: 24px; /* adjust as needed */
+    object-fit: contain;
+}
+
 .location-search-box {
     display: flex;
     align-items: center;
@@ -68,20 +110,6 @@
 }
 
 
-
-
-.doctor-search-box {
-    display: flex;
-    align-items: center;
-    width: 430px;
-    position: absolute;
-    margin-top: 25px;
-    margin-bottom: 20px;
-    box-shadow: rgba(0, 0, 0,.1) 0 - 1px 0 0 inset;
-    border-radius: 5px;
-    height: 100vh;
-}
-
 .doctor-search-box>img {
     border: 1px solid #ddd;
     border-right: none;
@@ -89,29 +117,18 @@
     padding-left: 5px;
 }
 
-.search-doctor-input-box {
-    height: 40px;
-    width: 100%;
-    padding: 6px 20px 5px 10px;
-    outline: none;
-    cursor: pointer;
-    font-size: 14px;
-    border-top-left-radius:5px;
-    border-bottom-left-radius:5px;
-    border-top-right-radius:0;
-    border-bottom-right-radius:0;
-    border:1px solid rgb(59, 58, 58);
-}
-
-.findiconimg{
+.findiconimg {
     width: 40px;
     left: 0;
     background-color: rgb(239, 234, 234);
     height: 40px;
     border: 1px solid rgb(59, 58, 58);
-    z-index: -99;
-
+    z-index: 2; /* Changed from -99 to 2 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .search-doctor-input-results {
     position: absolute;
     top: 55%;
@@ -166,10 +183,6 @@
     align-items: center;
 }
 
-.finddoctor{
-    /* height: 0 auto; */
-    overflow: hidden;
-} 
 .finddoctor .mainimg{
     width: 312px;
     height: 312px;

@@ -1,185 +1,177 @@
-/** 
- * Following code has been commented with appropriate comments for your reference.
- * Styling for the Header Navbar
- */
-
-/* Styling for the main navigation bar */
-nav {
+/* Define custom properties for easy theming */
+:root {
+    --primary-color: #3685fb;
+    --secondary-color: #0d213f;
+    --hover-bg: #f2f2f2;
+    --light-bg: #fff;
+    --box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s;
+    --border-radius: 4px;
+    --mobile-breakpoint: 768px;
+  }
+  
+  /* Main navigation bar */
+  nav {
     padding: 1.5rem;
     position: fixed;
-    top: 0%;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #fff;
-}
-
-/* Styling for the dropdown menu */
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1;
-    display: none;
-    min-width: 120px;
-    padding: 8px 0;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-}
-
-/* Styling for the user welcome message */
-.welcome-user {
-    position: relative;
-    cursor: pointer;
-}
-
-/* Display dropdown menu on hover */
-.welcome-user:hover .dropdown-menu {
-    display: block;
-}
-
-/* Styling for the items in the dropdown menu */
-.dropdown-menu li {
-    display: block;
-    width: 150px;
-    padding:5px;
-}
-
-/* Styling for links in the dropdown menu */
-.dropdown-menu li a {
-    color: #333;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-/* Hover effect for links in the dropdown menu */
-.dropdown-menu li a:hover {
-    color: #2190ff;
-}
-
-/* Styling for the logo in the navbar */
-.nav__logo {
+    background-color: var(--light-bg);
+    z-index: 1000;
+  }
+  
+  /* Logo */
+  .nav__logo {
     font-size: 2rem;
     font-weight: 600;
-    color: #0d213f;
+    color: var(--secondary-color);
     cursor: pointer;
-}
-
-/* Styling for a span within the logo */
-.nav__logo span {
-    color: #3685fb;
-}
-
-/* Styling for the icon in the navbar */
-.nav__icon {
+  }
+  
+  .nav__logo span {
+    color: var(--primary-color);
+  }
+  
+  /* Navigation Icon (for mobile) */
+  .nav__icon {
     display: none;
     font-size: 2rem;
     cursor: pointer;
-}
-
-/* Styling for the navigation links */
-.nav__links {
+  }
+  
+  /* Navigation links container */
+  .nav__links {
     list-style: none;
     display: flex;
     align-items: center;
     gap: 1rem;
     font-size: 1rem;
     font-weight: 500;
-}
-
-/* Styling for individual links in the navigation */
-.link a {
+  }
+  
+  /* Individual link styles */
+  .link a {
     display: inline-block;
-    padding: 0.5em 1em; /* increased clickable area */
-    color: #0d213f;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    border-radius: 4px; /* slight rounding */
+    padding: 0.5em 1em;
+    color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
     cursor: pointer;
-}
-
-.link a:hover {
-    background-color: #f2f2f2; /* subtle background change on hover */
-    color: #3685fb;
-}
-
-/* Media queries for mobile responsiveness */
-@media (max-width: 768px) {
+    text-decoration: none;
+  }
+  
+  .link a:hover {
+    background-color: var(--hover-bg);
+    color: var(--primary-color);
+  }
+  
+  /* Dropdown menu (for user actions, if needed) */
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    display: none;
+    min-width: 120px;
+    padding: 8px 0;
+    background-color: var(--light-bg);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius);
+  }
+  
+  .welcome-user {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .welcome-user:hover .dropdown-menu {
+    display: block;
+  }
+  
+  /* Dropdown menu items */
+  .dropdown-menu li {
+    padding: 5px;
+    width: 150px;
+  }
+  
+  .dropdown-menu li a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed) ease;
+  }
+  
+  .dropdown-menu li a:hover {
+    color: var(--primary-color);
+  }
+  
+  /* Button styles */
+  .btn1, .btn2 {
+    border: 2px solid var(--primary-color);
+    background-color: var(--light-bg);
+    color: var(--secondary-color);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  }
+  
+  /* Specific adjustments for btn2 */
+  .btn2 {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+  }
+  
+  .btn1:hover, .btn2:hover {
+    background-color: var(--primary-color);
+    color: var(--light-bg);
+  }
+  
+  /* Responsive styling for mobile */
+  @media (max-width: var(--mobile-breakpoint)) {
     .nav__logo {
-        margin-right: auto;
+      margin-right: auto;
     }
-
     .nav__icon {
-        display: block;
+      display: block;
     }
-
     .nav__links {
-        display: none;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
     }
-
     .nav__links.active {
-        display: flex;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        margin: auto;
-        background-color: #fff;
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem 0;
-        border-radius: 0.5rem;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        z-index: 999;
-        animation: slideDown 0.5s ease-in-out; /* Animation effect */
+      display: flex;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: var(--light-bg);
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 0;
+      border-radius: 0.5rem;
+      box-shadow: var(--box-shadow);
+      z-index: 999;
+      animation: slideDown 0.5s ease-in-out;
     }
-}
-
-/* Keyframes for slide down animation */
-@keyframes slideDown {
+  }
+  
+  /* Slide down animation for mobile menu */
+  @keyframes slideDown {
     0% {
-        transform: translateY(-10px);
-        opacity: 0;
+      transform: translateY(-10px);
+      opacity: 0;
     }
     100% {
-        transform: translateY(0);
-        opacity: 1;
+      transform: translateY(0);
+      opacity: 1;
     }
-}
-
-/* Button styles */
-.btn1 {
-    border: 2px solid #3685fb;
-    background-color: white;
-    color: black;
-    border-radius: 50px;
-}
-
-.btn1:hover {
-    background-color: #3685fb; /* Hover effect */
-    color: white; /* Hover effect */
-}
-
-.btn2 {
-    border: 2px solid #3685fb;
-    background-color: white;
-    color: black;
-    border-radius: 50px;
-    height:30px;
-    display:flex; /* Align items and justify content */
-    align-items:center; /* Align items and justify content */
-    justify-content:center; /* Align items and justify content */
-    margin-top:3px; /* Margin from top */
-}
-
-.btn2:hover {
-    background-color:#3685fb; /* Hover effect */
-    color:white; /* Hover effect */
-}
-  
+  }
