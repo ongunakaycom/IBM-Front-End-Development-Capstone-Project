@@ -70,20 +70,27 @@
     color: var(--primary-color);
   }
   
-  /* Dropdown menu (for user actions, if needed) */
   .dropdown-menu {
     position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 10;
-    display: none;
-    min-width: 120px;
-    padding: 8px 0;
-    background-color: var(--light-bg);
+    top: 100%; /* Position below the parent element */
+    right: 0; /* Align to the right */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: var(--border-radius);
+    z-index: 1000;
+    padding: 10px;
+    width: 300px; /* Adjust width to fit the ProfileCard */
+    display: none; /* Initially hidden */
   }
   
+  .dropdown-menu.show {
+    display: block; /* Show the dropdown when the class is added */
+  }
+  
+  .welcome-message {
+    cursor: pointer;
+  }
   .welcome-user {
     position: relative;
     cursor: pointer;

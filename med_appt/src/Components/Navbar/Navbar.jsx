@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import ProfileCard from "../ProfileCard/ProfileCard"; // Import the ProfileCard component
 import "./Navbar.css";
 
 const Navbar = () => {
   const [click, setClick] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleClick = () => setClick(!click);
 
@@ -31,6 +33,18 @@ const Navbar = () => {
 
   // Extract the name before the '@' in the email
   const displayName = username ? username.split("@")[0] : "";
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  // Mock user data for the ProfileCard
+  const user = {
+    name: displayName || "User",
+    email: username || "user@example.com",
+    role: "Member",
+    avatar: "https://via.placeholder.com/100", // Placeholder avatar
+  };
 
   return (
     <nav>
@@ -62,10 +76,15 @@ const Navbar = () => {
         {isLoggedIn ? (
           <>
             <li className="link">
-              <span className="welcome-message">Hello, {displayName}</span>
+              <span className="welcome-message" onClick={toggleDropdown}>
+                Welcome, {displayName} <i className="fa fa-caret-down"></i>
+              </span>
+              <div className={`dropdown-menu ${showDropdown ? "show" : ""}`}>
+                <ProfileCard user={user} /> {/* Render ProfileCard in the dropdown */}
+              </div>
             </li>
             <li className="link">
-              <button className="btn2" onClick={handleLogout}>
+              <button className="btn1 logout-button" onClick={handleLogout}>
                 Logout
               </button>
             </li>
