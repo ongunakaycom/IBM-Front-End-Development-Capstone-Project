@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './FindDoctorSearchIC.css';
 import { useNavigate } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
 
 const initSpeciality = [
   'Dentist',
@@ -25,7 +26,7 @@ const FindDoctorSearchIC = () => {
     window.location.reload();
   };
 
-  // Fallback function for images if not loaded
+  // Fallback function for images if needed (not used for react icon)
   const handleImageError = (e) => {
     e.target.onerror = null;
     e.target.src = "/images/placeholder.svg";
@@ -36,10 +37,7 @@ const FindDoctorSearchIC = () => {
       <center>
         <h1>Find a doctor and Consult instantly</h1>
         <div>
-          <i 
-            style={{ color: '#000000', fontSize: '20rem' }} 
-            className="fa fa-user-md"
-          ></i>
+          <i style={{ color: '#000000', fontSize: '20rem' }} className="fa fa-user-md"></i>
         </div>
         <div
           className="home-search-container"
@@ -56,12 +54,7 @@ const FindDoctorSearchIC = () => {
               onChange={(e) => setSearchDoctor(e.target.value)}
             />
             <div className="findiconimg">
-              <img 
-                className='findIcon' 
-                src="/images/search.svg" 
-                alt="Search Icon"
-                onError={handleImageError}
-              />
+              <FaSearch className="findIcon" size={20} color="#000" />
             </div>
             <div className="search-doctor-input-results" hidden={doctorResultHidden}>
               {specialities.map((speciality) => (
@@ -71,13 +64,7 @@ const FindDoctorSearchIC = () => {
                   onMouseDown={() => handleDoctorSelect(speciality)}
                 >
                   <span>
-                    <img
-                      src="/images/search.svg"
-                      alt="Search Icon"
-                      style={{ height: "10px", width: "10px" }}
-                      width="12"
-                      onError={handleImageError}
-                    />
+                    <FaSearch size={12} color="#000" />
                   </span>
                   <span>{speciality}</span>
                   <span>SPECIALITY</span>
