@@ -1,6 +1,6 @@
 /* Add top padding to main container so content isn’t hidden by the fixed navbar */
 .finddoctor {
-    padding-top: 80px; /* Adjust this value based on your navbar height */
+    padding-top: 200px; /* Adjust this value based on your navbar height */
     overflow: hidden;
 }
 

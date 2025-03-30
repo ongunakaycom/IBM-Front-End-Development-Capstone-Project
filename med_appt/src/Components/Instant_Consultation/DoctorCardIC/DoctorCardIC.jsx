@@ -49,8 +49,14 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic }) => 
           <div className="doctor-card-detail-experience">{experience} years experience</div>
           <div className="doctor-card-detail-consultationfees">Ratings: {ratings}</div>
         </div>
+        {/* Step 6: New Book Appointment button added here */}
+        <button className="book-appointment-btn">
+          <div>Book Appointment</div>
+          <div>No Booking Fee</div>
+        </button>
       </div>
 
+      {/* The below Popup block can be ignored for now (related to AppointmentForm exercise) */}
       <div className="doctor-card-options-container">
         <Popup
           style={{ backgroundColor: '#FFFFFF' }}
@@ -90,7 +96,6 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic }) => 
                   <div className="doctor-card-detail-consultationfees">Ratings: {ratings}</div>
                 </div>
               </div>
-
               {appointments.length > 0 ? (
                 <>
                   <h3 style={{ textAlign: 'center' }}>Appointment Booked!</h3>
