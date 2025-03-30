@@ -6,8 +6,6 @@ StayHealthy Inc. is a non-profit organization dedicated to improving healthcare 
 
 The website will offer a user-friendly platform that allows patients to book medical appointments, view doctor listings, provide consultation feedback, and manage their personal profiles, all through an intuitive and accessible interface.
 
-## Features
-
 ### Medical Appointments Online
 - **Schedule Appointments**: Patients can schedule appointments with doctors, selecting their preferred time slots.
 - **Instant Consultation**: Consultation with doctors is available without prior appointments.
@@ -63,3 +61,32 @@ This project is licensed under the License - see the [LICENSE](LICENSE) file for
 For any questions or issues, please feel free to contact us:
 
 - Email: info@ongunakay.com
+
+## Features
+![
+    
+](img/appt_doccard_design.png) ![
+    
+](img/appt_search_design.png) ![
+    
+](img/login_form_design.png) ![
+    
+](img/login_form_layout.png) ![
+    
+](img/navbar_design.png) ![
+    
+](img/navbar_layout.png) ![
+    
+](img/react_navbar_folder_struct.png) ![
+    
+](img/react_navbar_output.png) ![
+    
+](img/readme.md_file.png) ![
+    
+](img/reviews_design.png) ![
+    
+](img/signup_form_design.png) ![
+    
+](img/signup_form_layout.png) ![
+    
+](img/signup_validation.png)
