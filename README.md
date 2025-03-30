@@ -35,22 +35,10 @@ The website will offer a user-friendly platform that allows patients to book med
 
 ## Technologies Used
 
-- **Frontend**: HTML, CSS, ReactJS
+- **Frontend**: HTML, CSS, ReactJS, VITE
 - **UI/UX**: Figma (for designing the user interface)
-- **Backend (For future phases)**: Placeholder for future backend technology (e.g., Node.js, Express)
-- **Database (For future phases)**: Placeholder for database integration (e.g., MongoDB, MySQL)
-
-### Folder Structure
-
-- `src/`: Contains all the source code for the frontend.
-- `public/`: Static assets like images, icons, etc.
-- `components/`: React components used for various parts of the website.
-- `assets/`: Folder for storing images and other media assets.
-- `styles/`: Contains CSS files for styling the website.
-
-## Contributing
-
-We welcome contributions to improve the StayHealthy platform! If you'd like to contribute, please fork the repository, create a new branch, and submit a pull request.
+- **Backend**: Express
+- **Database**: MongoDB
 
 ## License
 
