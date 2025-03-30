@@ -1,0 +1,71 @@
+/* Ensure the form is positioned below the navbar */
+.review-container {
+    margin-top: 200px; /* Adjust this value based on your navbar height */
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .review-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  .review-container form {
+    display: inline-block;
+    text-align: left;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .review-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .review-container input,
+  .review-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .review-container button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .review-container button:hover {
+    background-color: #0056b3;
+  }
+  
+  .warning {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .rating-selector {
+    display: flex;
+    gap: 5px;
+    cursor: pointer;
+  }
+  
+  .star {
+    font-size: 24px;
+    color: #ccc;
+    transition: color 0.2s;
+  }
+  
+  .star.selected {
+    color: #f5c518;
+  }
+  
+  .star:hover {
+    color: #f5c518;
+  }
