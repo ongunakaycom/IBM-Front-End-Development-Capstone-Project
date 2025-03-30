@@ -8,8 +8,8 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-
   const [errors, setErrors] = useState({});
+  const [serverMessage, setServerMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,8 +44,24 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      // Proceed with further processing, e.g. submit data to an API
-      console.log("Form submitted successfully:", formData);
+      // POST data to the Express server
+      fetch("http://localhost:5000/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Form submitted successfully:", data);
+          setServerMessage("User registered successfully!");
+          // Optionally, you can navigate to the login page or clear the form
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          setServerMessage("Registration failed. Please try again.");
+        });
     }
   };
 
@@ -57,6 +73,7 @@ const SignUp = () => {
       password: "",
     });
     setErrors({});
+    setServerMessage("");
   };
 
   return (
@@ -152,6 +169,7 @@ const SignUp = () => {
                 Reset
               </button>
             </div>
+            {serverMessage && <p>{serverMessage}</p>}
           </form>
         </div>
       </div>
