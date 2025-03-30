@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import './DoctorCardIC.css';
@@ -19,12 +19,8 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic }) => 
   };
 
   const handleFormSubmit = (appointmentData) => {
-    const newAppointment = {
-      id: uuidv4(),
-      ...appointmentData,
-    };
-    const updatedAppointments = [...appointments, newAppointment];
-    setAppointments(updatedAppointments);
+    const newAppointment = { id: uuidv4(), ...appointmentData };
+    setAppointments([...appointments, newAppointment]);
     setShowModal(false);
   };
 
@@ -32,16 +28,20 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic }) => 
     <div className="doctor-card-container">
       <div className="doctor-card-details-container">
         <div className="doctor-card-profile-image-container">
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="46" 
-            height="46" 
-            fill="currentColor" 
-            className="bi bi-person-fill" 
-            viewBox="0 0 16 16"
-          > 
-            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/> 
-          </svg>
+          {profilePic ? (
+            <img src={profilePic} alt={`${name}'s profile`} />
+          ) : (
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="46" 
+              height="46" 
+              fill="currentColor" 
+              className="bi bi-person-fill" 
+              viewBox="0 0 16 16"
+            > 
+              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/> 
+            </svg>
+          )}
         </div>
         <div className="doctor-card-details">
           <div className="doctor-card-detail-name">{name}</div>
@@ -49,14 +49,10 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic }) => 
           <div className="doctor-card-detail-experience">{experience} years experience</div>
           <div className="doctor-card-detail-consultationfees">Ratings: {ratings}</div>
         </div>
-        {/* Step 6: New Book Appointment button added here */}
-        <button className="book-appointment-btn">
-          <div>Book Appointment</div>
-          <div>No Booking Fee</div>
-        </button>
+        {/* Step 6: Book Appointment Button */}
       </div>
 
-      {/* The below Popup block can be ignored for now (related to AppointmentForm exercise) */}
+      {/* The Popup block for AppointmentForm functionality (ignored for now) */}
       <div className="doctor-card-options-container">
         <Popup
           style={{ backgroundColor: '#FFFFFF' }}
@@ -65,9 +61,11 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic }) => 
               {appointments.length > 0 ? (
                 <div>Cancel Appointment</div>
               ) : (
-                <div>Book Appointment</div>
+                <>
+                  <div>Book Appointment</div>
+                  <div>No Booking Fee</div>
+                </>
               )}
-              <div>No Booking Fee</div>
             </button>
           }
           modal
@@ -108,7 +106,11 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic }) => 
                   ))}
                 </>
               ) : (
-                <AppointmentFormIC doctorName={name} doctorSpeciality={speciality} onSubmit={handleFormSubmit} />
+                <AppointmentFormIC
+                  doctorName={name}
+                  doctorSpeciality={speciality}
+                  onSubmit={handleFormSubmit}
+                />
               )}
             </div>
           )}
