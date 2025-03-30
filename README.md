@@ -63,16 +63,4 @@ For any questions or issues, please feel free to contact us:
 - Email: info@ongunakay.com
 
 ## Features
-img\appt_doccard_design.png
-img\appt_search_design.png
-img\login_form_design.png
-img\login_form_layout.png
-img\navbar_design.png
-img\navbar_layout.png
-img\react_navbar_folder_struct.png
-img\react_navbar_output.png
-img\readme.md_file.png
-img\reviews_design.png
-img\signup_form_design.png
-img\signup_form_layout.png
-img\signup_validation.png
+![alt text](img/appt_doccard_design.png) ![alt text](img/appt_search_design.png) ![alt text](img/login_form_design.png) ![alt text](img/login_form_layout.png) ![alt text](img/navbar_design.png) ![alt text](img/navbar_layout.png) ![alt text](img/react_navbar_folder_struct.png) ![alt text](img/react_navbar_output.png) ![alt text](img/readme.md_file.png) ![alt text](img/reviews_design.png) ![alt text](img/signup_form_design.png) ![alt text](img/signup_form_layout.png) ![alt text](img/signup_validation.png)
