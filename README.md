@@ -42,38 +42,6 @@ The website will offer a user-friendly platform that allows patients to book med
 - **Backend (For future phases)**: Placeholder for future backend technology (e.g., Node.js, Express)
 - **Database (For future phases)**: Placeholder for database integration (e.g., MongoDB, MySQL)
 
-## Project Setup
-
-### Prerequisites
-
-Ensure you have the following installed on your system:
-- **Node.js** (LTS version)
-- **npm** (Node Package Manager)
-
-### Installation Steps
-
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/grihf-frontend_capstone_starter_code.git
-    ```
-
-2. Navigate to the project folder:
-    ```bash
-    cd grihf-frontend_capstone_starter_code
-    ```
-
-3. Install the required dependencies:
-    ```bash
-    npm install
-    ```
-
-4. Run the development server:
-    ```bash
-    npm start
-    ```
-
-The website should now be running at `http://localhost:3000` in your browser.
-
 ### Folder Structure
 
 - `src/`: Contains all the source code for the frontend.
@@ -86,16 +54,9 @@ The website should now be running at `http://localhost:3000` in your browser.
 
 We welcome contributions to improve the StayHealthy platform! If you'd like to contribute, please fork the repository, create a new branch, and submit a pull request.
 
-### Steps for contributing:
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature-branch`).
-3. Make your changes and commit them (`git commit -am 'Add feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Submit a pull request.
-
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact Information
 
