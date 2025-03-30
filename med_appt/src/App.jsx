@@ -5,7 +5,7 @@ import React from "react";
 import { BrowserRouter, Routes } from "react-router-dom";
 
 // Import custom Navbar component
-import Navbar from "./Components/Navbar/Navbar";
+import Navbar from "./Components/Navbar/Navbar.jsx";
 
 // Function component for the main App
 function App() {
