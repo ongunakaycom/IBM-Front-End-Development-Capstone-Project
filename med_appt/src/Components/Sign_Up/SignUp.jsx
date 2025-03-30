@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Sign_Up.css";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -18,7 +20,6 @@ const SignUp = () => {
 
   const validate = () => {
     const newErrors = {};
-
     if (!formData.name.trim()) {
       newErrors.name = "Name is required.";
     }
@@ -41,10 +42,10 @@ const SignUp = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  // register is the function that handles form submission and calls the API.
+  const register = (e) => {
     e.preventDefault();
     if (validate()) {
-      // POST data to the Express server
       fetch("http://localhost:5000/api/signup", {
         method: "POST",
         headers: {
@@ -54,9 +55,12 @@ const SignUp = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Form submitted successfully:", data);
+          console.log("User registered successfully:", data);
           setServerMessage("User registered successfully!");
-          // Optionally, you can navigate to the login page or clear the form
+          // Save the email in session storage for Navbar usage
+          sessionStorage.setItem("email", formData.email);
+          // Navigate to the Home page after a successful signup
+          navigate("/");
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -91,7 +95,7 @@ const SignUp = () => {
           </span>
         </div>
         <div className="signup-form">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={register}>
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <input
@@ -106,7 +110,6 @@ const SignUp = () => {
               />
               {errors.name && <span className="error">{errors.name}</span>}
             </div>
-
             <div className="form-group">
               <label htmlFor="phone">Phone</label>
               <input
@@ -121,7 +124,6 @@ const SignUp = () => {
               />
               {errors.phone && <span className="error">{errors.phone}</span>}
             </div>
-
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
@@ -136,7 +138,6 @@ const SignUp = () => {
               />
               {errors.email && <span className="error">{errors.email}</span>}
             </div>
-
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
@@ -153,7 +154,6 @@ const SignUp = () => {
                 <span className="error">{errors.password}</span>
               )}
             </div>
-
             <div className="btn-group">
               <button
                 type="submit"

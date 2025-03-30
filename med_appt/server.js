@@ -50,6 +50,25 @@ app.post("/api/signup", (req, res) => {
   });
 });
 
+// API endpoint for login
+app.post("/api/login", (req, res) => {
+  const { email, password } = req.body;
+  const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+  const params = [email, password];
+  
+  db.get(sql, params, (err, row) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).json({ error: err.message });
+    } else if (!row) {
+      res.status(401).json({ error: "Invalid login credentials" });
+    } else {
+      // Here you can integrate a real token generation system (e.g., JWT)
+      res.status(200).json({ token: "dummy-token", user: row });
+    }
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
