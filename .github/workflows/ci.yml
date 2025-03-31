@@ -19,16 +19,21 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-          cache-dependency-path: 'med_appt/package-lock.json'  # Ensures npm cache looks in the correct subdir
+          cache-dependency-path: 'med_appt/package-lock.json'
 
       - name: Install dependencies
-        working-directory: ./med_appt  # All commands now run inside `med_appt/`
-        run: npm ci  # Uses `package-lock.json` for exact versions
-
-      - name: Run tests (if any)
         working-directory: ./med_appt
-        run: npm test  # Example test command (adjust as needed)
+        run: npm ci
+
+      - name: Run tests (if configured)
+        working-directory: ./med_appt
+        run: |
+          if grep -q '"test":' package.json; then
+            npm test
+          else
+            echo "No test script found in package.json - skipping tests"
+          fi
 
       - name: Build the project
         working-directory: ./med_appt
-        run: npm run build  # Assumes `build` script exists in `package.json`
+        run: npm run build
