@@ -1,0 +1,42 @@
+name: Deploy Vite App
+
+on:
+  push:
+    branches:
+      - main  # Change if your default branch is different
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Vite project
+        run: npm run build
+
+      - name: Build and push Docker image
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker build -t my-vite-app .
+          docker tag my-vite-app my-dockerhub-username/my-vite-app:latest
+          docker push my-dockerhub-username/my-vite-app:latest
+
+      - name: Deploy to server
+        run: |
+          ssh user@your-server-ip << 'EOF'
+          docker pull my-dockerhub-username/my-vite-app:latest
+          docker stop vite-container || true
+          docker rm vite-container || true
+          docker run -d --name vite-container -p 5173:5173 my-dockerhub-username/my-vite-app:latest
+          EOF
