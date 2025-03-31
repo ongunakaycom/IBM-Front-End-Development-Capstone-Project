@@ -10,11 +10,13 @@ const Notification = ({ children }) => {
   const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
-    const storedUsername = sessionStorage.getItem('email');
+    // Fetch token and user data from sessionStorage
+    const storedToken = sessionStorage.getItem('auth-token');
+    const storedUsername = sessionStorage.getItem('name'); // Fetch name instead of email
     const storedDoctorData = JSON.parse(localStorage.getItem('doctorData'));
     const storedAppointmentData = JSON.parse(localStorage.getItem(storedDoctorData?.name));
 
-    if (storedUsername) {
+    if (storedToken && storedUsername) {
       setIsLoggedIn(true);
       setUsername(storedUsername);
     }
@@ -31,12 +33,14 @@ const Notification = ({ children }) => {
 
   const closeNotification = () => {
     setShowNotification(false);
-    localStorage.removeItem(doctorData?.name); // Remove appointment data on cancellation
+    if (doctorData?.name) {
+      localStorage.removeItem(doctorData.name); // Remove appointment data on cancellation
+    }
   };
 
   return (
     <div>
-      <Navbar></Navbar>
+      <Navbar />
       {children}
       {isLoggedIn && showNotification && appointmentData && (
         <div className="notification-container">
@@ -46,7 +50,7 @@ const Notification = ({ children }) => {
             </button>
             <h3 className="notification-title">Appointment Notification</h3>
             <p className="notification-message">
-              <strong>User:</strong> {username.split('@')[0]}
+              <strong>User:</strong> {username}
             </p>
             <p className="notification-message">
               <strong>Doctor:</strong> {doctorData?.name}

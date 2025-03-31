@@ -16,28 +16,25 @@ const Login = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-
-
     const validate = () => {
         const newErrors = {};
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
         if (!formData.email) {
             newErrors.email = "Email is required.";
         } else if (!emailRegex.test(formData.email)) {
             newErrors.email = "Invalid email format.";
         }
-    
+
         if (!formData.password) {
             newErrors.password = "Password is required.";
         } else if (formData.password.length < 6) {
             newErrors.password = "Password must be at least 6 characters.";
         }
-    
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    };    
-
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -67,8 +64,6 @@ const Login = () => {
                 });
         }
     };
-
-
 
     const handleReset = () => {
         setFormData({ email: '', password: '' });
@@ -103,6 +98,7 @@ const Login = () => {
                                 placeholder="Enter your email"
                                 value={formData.email}
                                 onChange={handleChange}
+                                autoComplete="email"
                             />
                             {errors.email && (
                                 <small className="error">{errors.email}</small>
@@ -118,6 +114,7 @@ const Login = () => {
                                 placeholder="Enter your password"
                                 value={formData.password}
                                 onChange={handleChange}
+                                autoComplete="current-password"
                             />
                             {errors.password && (
                                 <small className="error">{errors.password}</small>

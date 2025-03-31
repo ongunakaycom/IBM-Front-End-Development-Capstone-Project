@@ -31,6 +31,22 @@ const db = new sqlite3.Database("./database.db", (err) => {
         }
       }
     );
+
+    // Create an appointments table if it doesn't exist
+    db.run(
+      `CREATE TABLE IF NOT EXISTS appointments (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT,
+          phone TEXT,
+          appointment_date TEXT,
+          time_slot TEXT
+      )`,
+      (err) => {
+        if (err) {
+          console.error("Table creation error:", err.message);
+        }
+      }
+    );
   }
 });
 
@@ -38,7 +54,6 @@ const db = new sqlite3.Database("./database.db", (err) => {
 app.post("/api/signup", (req, res) => {
   const { name, phone, email, password } = req.body;
 
-  // Check if the email already exists
   const checkEmailSql = "SELECT * FROM users WHERE email = ?";
   db.get(checkEmailSql, [email], (err, row) => {
     if (err) {
@@ -47,7 +62,6 @@ app.post("/api/signup", (req, res) => {
     } else if (row) {
       res.status(400).json({ error: "Email already exists. Please use a different email." });
     } else {
-      // Insert the new user if email does not exist
       const sql = "INSERT INTO users (name, phone, email, password) VALUES (?, ?, ?, ?)";
       const params = [name, phone, email, password];
 
@@ -68,7 +82,7 @@ app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
   const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
   const params = [email, password];
-  
+
   db.get(sql, params, (err, row) => {
     if (err) {
       console.error(err.message);
@@ -76,8 +90,8 @@ app.post("/api/login", (req, res) => {
     } else if (!row) {
       res.status(401).json({ error: "Invalid login credentials" });
     } else {
-      // Here you can integrate a real token generation system (e.g., JWT)
-      res.status(200).json({ token: "dummy-token", user: row });
+      const token = Math.random().toString(36).substr(2);
+      res.status(200).json({ token, user: row });
     }
   });
 });
@@ -102,6 +116,44 @@ app.post("/api/appointments", (req, res) => {
   });
 });
 
+// API endpoint to fetch appointments
+app.get("/api/appointments", (req, res) => {
+  const sql = "SELECT * FROM appointments";
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(200).json(rows);
+    }
+  });
+});
+
+// API endpoint for notifications
+app.get("/api/notifications", (req, res) => {
+  const { email } = req.query;
+
+  if (!email) {
+    return res.status(400).json({ error: "Email is required to fetch notifications." });
+  }
+
+  const sql = `
+    SELECT * FROM appointments
+    WHERE phone IN (SELECT phone FROM users WHERE email = ?)
+    ORDER BY appointment_date ASC, time_slot ASC
+  `;
+
+  db.all(sql, [email], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(200).json(rows);
+    }
+  });
+});
+
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
