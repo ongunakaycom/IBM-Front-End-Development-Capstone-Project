@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
   const [name, setName] = useState('');
@@ -8,17 +8,25 @@ const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
+  useEffect(() => {
+    // Fetch logged-in user data from localStorage
+    const loggedUser = JSON.parse(localStorage.getItem('user'));
+    if (loggedUser) {
+      setName(loggedUser.name || '');
+      setPhoneNumber(loggedUser.phone || '');
+    }
+  }, []);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-  
-    // Validate that all fields are filled
+
+    // Validate input fields
     if (!name || !phoneNumber || !appointmentDate || !timeSlot) {
       setError('Please fill out all fields.');
       return;
     }
-  
-    // Validate that the appointment date is not in the past
+
+    // Validate date (cannot be in the past)
     const selectedDate = new Date(appointmentDate);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -26,32 +34,36 @@ const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
       setError('Please choose a future date.');
       return;
     }
-  
+
     setError('');
-  
-    // Send data to the server
+
+    // Appointment data to send
+    const appointmentData = {
+      name,
+      phoneNumber,
+      appointmentDate,
+      timeSlot,
+    };
+
     try {
       const response = await fetch('http://localhost:5000/api/appointments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name,
-          phoneNumber,
-          appointmentDate,
-          timeSlot,
-        }),
+        body: JSON.stringify(appointmentData),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
-        setSuccessMessage(data.message);
-        setName('');
-        setPhoneNumber('');
+        setSuccessMessage('Appointment successfully booked!');
+        
+        // Clear form fields after successful submission
         setAppointmentDate('');
         setTimeSlot('');
-        onSubmit(data); // Pass the response data to the parent component if needed
+
+        // Pass appointment details to parent component
+        onSubmit({ ...appointmentData, id: data.id });
       } else {
         const errorData = await response.json();
         setError(errorData.error || 'Failed to create appointment.');
@@ -61,7 +73,6 @@ const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
       console.error(err);
     }
   };
-
 
   return (
     <form onSubmit={handleFormSubmit} className="appointment-form">
