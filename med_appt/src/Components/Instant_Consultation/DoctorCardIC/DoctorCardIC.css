@@ -118,14 +118,17 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-.doctorbg{
-  -webkit-scrollbar {
-    display: none;
+
+.doctorbg {
+  scrollbar-width: none; /* For Firefox */
+}
+
+.doctorbg::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Edge */
 }
 
 
 
-}
 .modal-btn:hover {
   background-color: #0d8af5;
 }
