@@ -1,41 +1,29 @@
-name: Build and Deploy Docker Image
+name: Build Vite Project
 
 on:
   push:
     branches:
-      - main
+      - main  # This triggers the action on every push to the main branch (change to another branch if needed)
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Use Ubuntu as the runner environment
 
     steps:
+      # Step 1: Checkout the repository to the action's workspace
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Step 2: Set up Node.js (you can change the version to your preference)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: "npm"
+          node-version: '18'  # Make sure this matches your Node.js version
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      - name: Build Vite project
+      # Step 4: Build the project using the `npm run build` command
+      - name: Build project
         run: npm run build
-
-      - name: Build Docker image
-        run: |
-          docker build -t my-vite-app .
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Push Docker image to Docker Hub
-        run: |
-          docker tag my-vite-app my-dockerhub-username/my-vite-app:latest
-          docker push my-dockerhub-username/my-vite-app:latest
