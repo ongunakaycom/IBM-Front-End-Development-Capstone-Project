@@ -1,9 +1,9 @@
-name: Deploy Vite App
+name: Build and Deploy Docker Image
 
 on:
   push:
     branches:
-      - main  # Change if your default branch is different
+      - main
 
 jobs:
   build:
@@ -25,18 +25,17 @@ jobs:
       - name: Build Vite project
         run: npm run build
 
-      - name: Build and push Docker image
+      - name: Build Docker image
         run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
           docker build -t my-vite-app .
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Docker image to Docker Hub
+        run: |
           docker tag my-vite-app my-dockerhub-username/my-vite-app:latest
           docker push my-dockerhub-username/my-vite-app:latest
-
-      - name: Deploy to server
-        run: |
-          ssh user@your-server-ip << 'EOF'
-          docker pull my-dockerhub-username/my-vite-app:latest
-          docker stop vite-container || true
-          docker rm vite-container || true
-          docker run -d --name vite-container -p 5173:5173 my-dockerhub-username/my-vite-app:latest
-          EOF
